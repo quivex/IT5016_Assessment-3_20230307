@@ -1,0 +1,164 @@
+from random import shuffle
+
+
+class Card:
+#makes suits
+    suits = ["spades",
+             "hearts",
+             "diamonds",
+             "clubs"]
+#gives the cards vaules
+    values = [None, None,"2", "3",
+              "4", "5", "6", "7",
+              "8", "9", "10",
+              "Jack", "Queen",
+              "King", "Ace"]
+#defineing self,vaules and suits
+    def __init__(self, v, s):
+        """suit + value are ints"""
+        self.value = v
+        self.suit = s
+#defineing self and c2
+    def __lt__(self, c2):
+#if c2 is <.vaule return true   
+        if self.value < c2.value:
+            return True
+#if suit is < c2.suit return true
+        if self.value == c2.value:
+            if self.suit < c2.suit:
+                return True
+            else:
+#returns false if c2 is >.values        
+                return False
+#returns false if suit is >c2.suit       
+        return False
+
+    def __gt__(self, c2):
+#if c2 is <.vaule return true   
+         self.value > c2.value:
+            return True
+#if suit is < c2.suit return true
+        if self.value == c2.value:
+            if self.suit > c2.suit:
+                return True
+            else:
+#returns false if c2 is >.values        
+                return False
+#returns false if suit is >c2.suit    
+        return False
+
+    def __repr__(self):
+#returns values 
+        v = self.values[self.value] +\
+            " of " + \
+            self.suits[self.suit]
+        return v
+
+#makes the deck of cards
+class Deck:
+    def __init__(self):
+        self.cards = []
+        for i in range(2, 15):
+            for j in range(4):
+                self.cards\
+                    .append(Card(i,
+                                 j))
+#shuffles cards
+        shuffle(self.cards)
+
+    def rm_card(self):
+        if len(self.cards) == 0:
+            return
+        return self.cards.pop()
+
+#makes the player
+class Player:
+    def __init__(self, name):
+#stores wins
+        self.wins = 0
+#stores card
+        self.card = None
+#stores name
+        self.name = name
+
+#creats the game
+class Game:
+    def __init__(self):
+#enters player 1 name
+        name1 = input("p1 name ")
+#enters player 2 name
+        name2 = input("p2 name ")
+#creating the deck
+        self.deck = Deck()
+#displays player 1 name
+        self.p1 = Player(name1)
+#displays player 2 name
+        self.p2 = Player(name2)
+#say who won
+    def wins(self, winner):
+#who one the round
+        w = "{} wins this round"
+        w = w.format(winner)
+#prints w
+        print(w)
+#if they draw
+    def draw(self, p1n, p1c, p2n, p2c):
+#says who draws
+        d = "{} drew {} {} drew {}"
+        d = d.format(p1n,
+                     p1c,
+                     p2n,
+                     p2c)
+#prints d
+        print(d)
+#runs the game
+    def play_game(self):
+        cards = self.deck.cards
+    #prints begin war
+        print("beginning War!")
+        while len(cards) >= 2:
+# q=quit
+            m = "q to quit. Any " + \
+                "key to play:"
+            response = input(m)
+            if response == 'q':
+                break
+#player 1 card
+            p1c = self.deck.rm_card()
+#player 2 card
+            p2c = self.deck.rm_card()
+#player 1 name
+            p1n = self.p1.name
+#player 2 name
+            p2n = self.p2.name
+            self.draw(p1n,
+                      p1c,
+                      p2n,
+                      p2c)
+            if p1c > p2c:
+#player 1 wins if > then player 2
+                self.p1.wins += 1
+                self.wins(self.p1.name)
+            else:
+#player 2 wins if > then player 1
+                self.p2.wins += 1
+                self.wins(self.p2.name)
+
+        win = self.winner(self.p1,
+                         self.p2)
+#prints war is over when game is won
+        print("War is over.{} wins"
+              .format(win))
+
+    def winner(self, p1, p2):
+        if p1.wins > p2.wins:
+#returns player 1 name if > then player 2
+            return p1.name
+        if p1.wins < p2.wins:
+#returns player 2 name if > then player 1 
+            return p2.name
+#returns it was a tie if it was a tie
+        return "It was a tie!"'
+
+game = Game()
+game.play_game()
