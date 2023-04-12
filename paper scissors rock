@@ -1,0 +1,45 @@
+python
+
+import random
+
+ 
+#Options to chose
+options = ["Rock", "Paper", "Scissors"]
+
+ 
+#What user choses
+user_choice = input("Choose Rock, Paper, or Scissors: ")
+
+#makes computer choice random
+computer_choice = random.choice(options)
+
+ 
+#prints user choice
+print("You chose: ", user_choice)
+
+#prints computers choice
+print("Computer chose: ", computer_choice)
+
+ 
+
+if user_choice == computer_choice:
+#print tie if both pick the same
+    print("It's a tie!")
+
+elif user_choice == "Rock" and computer_choice == "Scissors":
+#print win if one pick rock other picks scissors
+    print("You win!")
+
+elif user_choice == "Paper" and computer_choice == "Rock":
+#print win if one pick paper other picks rock
+    print("You win!")
+
+#print win if one pick scissors other picks paper
+elif user_choice == "Scissors" and computer_choice == "Paper":
+
+#print win
+    print("You win!")
+
+else:
+
+    print("Computer wins!")
